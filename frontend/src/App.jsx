@@ -15,24 +15,26 @@ function App() {
 
   const fetchUserDetails = async () => {
     try {
-      const dataResponse = await fetch(summaryApi.userDetail.url, {
+      const response = await fetch(summaryApi.userDetail.url, {
         method: summaryApi.userDetail.method,
         credentials: "include",
       });
 
-      const dataApi = await dataResponse.json();
+      const data = await response.json();
 
-      if (dataApi.success) {
-        setCurrentUser((prev) => ({
-          ...prev,
-          userId: dataApi.data._id,
-          userName: dataApi.data.username,
-          role: dataApi.data.role,
-        }));
+      if (data.success) {
+        setCurrentUser({
+          userId: data.data._id,
+          userName: data.data.username,
+          role: data.data.role,
+        });
+      } else {
+        toast.error("Failed to fetch user details");
       }
-      console.log("current user", dataApi);
+      console.log("Current user:", data);
     } catch (error) {
       console.error("Error fetching user details:", error);
+      toast.error("Error fetching user details");
     }
   };
 
@@ -41,18 +43,16 @@ function App() {
   }, []);
 
   return (
-    <>
-      <userContext.Provider
-        value={{ fetchUserDetails, currentUser, setCurrentUser }}
-      >
-        <Toaster />
-        <Header />
-        <main className="min-h-[calc(100vh-120px)] pt-16">
-          <Outlet />
-        </main>
-        <Footer />
-      </userContext.Provider>
-    </>
+    <userContext.Provider
+      value={{ fetchUserDetails, currentUser, setCurrentUser }}
+    >
+      <Toaster />
+      <Header />
+      <main className="min-h-[calc(100vh-120px)] pt-16">
+        <Outlet />
+      </main>
+      <Footer />
+    </userContext.Provider>
   );
 }
 

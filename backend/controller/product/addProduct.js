@@ -4,7 +4,6 @@ const userModel = require("../../models/userModel");
 async function addProduct(req, res) {
   try {
     const { name, price, description, category, company, imgUrl } = req.body;
-
     if (!name || !price || !description || !category) {
       return res.status(400).json({
         message: "Provide all required data",

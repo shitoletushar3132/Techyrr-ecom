@@ -6,6 +6,7 @@ async function updateProduct(req, res) {
   try {
     const { productId, updateData } = req.body;
 
+    console.log("product updatae", productId, updateData);
     const userId = req.userId;
 
     if (!productId || !updateData || !userId) {
