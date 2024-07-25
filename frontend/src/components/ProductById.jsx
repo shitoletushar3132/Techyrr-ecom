@@ -47,10 +47,10 @@ const ProductById = () => {
           <img
             src={data.imgUrl}
             alt={data.name || "Product Image"}
-            className="w-2/3  h-60 object-cover rounded-lg hover:scale-125 duration-700"
+            className="w-2/3 h-60 object-contain rounded-lg hover:scale-125 duration-700 mix-blend-multiply "
           />
         ) : (
-          <div className="w-2/3 h-60 rounded-lg text-xl flex justify-center items-center bg-violet-200">
+          <div className="w-2/3 h-60 rounded-lg text-xl flex justify-center items-center bg-violet-200 ">
             <p className="text-3xl text-slate-400">{data.category}</p>
           </div>
         )}
@@ -61,11 +61,13 @@ const ProductById = () => {
         <h2 className="text-2xl font-semibold text-gray-800 truncate">
           {data.name || "Product Name"}
         </h2>
-        <p className="text-md text-gray-600 mt-1 ">
-          Description : {data.description || "No description available"}
+        <p className="text-md text-gray-600 mt-1 max-w-md break-words">
+          <span className="underline">Description</span> :{" "}
+          {data.description || "No description available"}
         </p>
         <p className="text-lg font-bold text-green-600 mt-2">
-          Price : ${data.price?.toFixed(2) || "0.00"}
+          Price : {localStorage.getItem("toCountry")}{" "}
+          {(localStorage.getItem("rate") * data?.price).toFixed(2) || "0.00"}
         </p>
         <p className="text-sm text-gray-500 mt-1">
           Category : {data.category || "Category"}

@@ -34,6 +34,8 @@ async function addProduct(req, res) {
       };
       const product = new productModel(data);
       const savedProduct = await product.save();
+
+      console.log("save data", savedProduct);
       res.status(201).json({
         message: "Product added successfully",
         error: false,

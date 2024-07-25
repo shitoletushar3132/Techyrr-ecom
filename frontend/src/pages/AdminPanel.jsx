@@ -3,8 +3,7 @@ import summaryApi from "../common";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import userContext from "../../context/userContext";
 import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
-import { MdDelete } from "react-icons/md";
-import { MdModeEdit } from "react-icons/md";
+import { MdDelete, MdModeEdit } from "react-icons/md";
 import toast from "react-hot-toast";
 
 const AdminPanel = () => {
@@ -35,8 +34,9 @@ const AdminPanel = () => {
     }
   };
 
-  const detele = async (productId) => {
-    console.log(productId);
+  const deleteProduct = async (e, productId) => {
+    e.stopPropagation();
+    e.preventDefault();
     try {
       const apiData = await fetch(summaryApi.deleteProduct.url, {
         method: "post",
@@ -51,8 +51,12 @@ const AdminPanel = () => {
       if (response.success) {
         toast.success(response.message);
         fetchProducts();
+      } else {
+        toast.error(response.message);
       }
-    } catch (error) {}
+    } catch (error) {
+      toast.error("An error occurred while deleting the product.");
+    }
   };
 
   useEffect(() => {
@@ -114,15 +118,16 @@ const AdminPanel = () => {
 
               {/* Product Details */}
               <div className="w-full p-2 flex flex-col justify-between">
-                <h2 className="text-2xl font-semibold text-gray-800 truncate">
+                <h2 className="text-xl font-semibold text-gray-800 ">
                   {product.name || "Product Name"}
                 </h2>
-                <p className="text-md text-gray-600 mt-1 ">
-                  Description :{" "}
+                <p className="text-md text-gray-600 mt-1 text-ellipsis line-clamp-1">
                   {product.description || "No description available"}
                 </p>
                 <p className="text-lg font-bold text-green-600 mt-2">
-                  ${product.price?.toFixed(2) || "0.00"}
+                  {localStorage.getItem("toCountry")}{" "}
+                  {(localStorage.getItem("rate") * product?.price).toFixed(2) ||
+                    "0.00"}
                 </p>
                 <p className="text-xs text-gray-500 mt-1">
                   {product.category || "Category"} |{" "}
@@ -136,12 +141,12 @@ const AdminPanel = () => {
                   >
                     <MdModeEdit />
                   </Link>
-                  <p
-                    className="hover:text-red-500  hover:scale-110"
-                    onClick={() => detele(product._id)}
+                  <button
+                    onClick={(e) => deleteProduct(e, product._id)}
+                    className="hover:text-red-500 hover:scale-110 bg-transparent border-none"
                   >
                     <MdDelete />
-                  </p>
+                  </button>
                 </div>
               </div>
             </Link>

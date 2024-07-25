@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { decrypt, encrypt } = require("../helper/encrypt_decrypt");
 
 const productSchema = new mongoose.Schema({
   userId: {
