@@ -12,7 +12,9 @@ const Home = () => {
     parseInt(new URLSearchParams(location.search).get("page")) || 1
   );
   const [totalPages, setTotalPages] = useState(1);
-  const [currency, setCurrency] = useState(localStorage.getItem("toCountry") || "INR");
+  const [currency, setCurrency] = useState(
+    localStorage.getItem("toCountry") || "INR"
+  );
   const [rate, setRate] = useState(1); // Default rate to 1
 
   const fetchProducts = async () => {
@@ -107,14 +109,14 @@ const Home = () => {
             <Link
               to={`/product/${product._id}`}
               key={product._id}
-              className="flex items-center bg-white shadow-md rounded-lg overflow-hidden my-4 p-4"
+              className="flex items-center justify-between bg-white shadow-md rounded-lg overflow-hidden my-4 p-4"
             >
-              <div className="w-full p-2">
+              <div className="w-full p-2 min-w-min">
                 {product.imgUrl ? (
                   <img
                     src={product.imgUrl}
                     alt={product.name || "Product Image"}
-                    className="w-full h-48 object-cover rounded-lg"
+                    className="w-full h-48 object-scale-down rounded-lg mix-blend-multiply"
                   />
                 ) : (
                   <div className="w-full h-48 rounded-lg text-xl flex justify-center items-center bg-violet-200">
@@ -127,7 +129,7 @@ const Home = () => {
 
               {/* Product Details */}
               <div className="w-full p-2 flex flex-col justify-between">
-                <h2 className="text-xl font-semibold text-gray-800 truncate">
+                <h2 className="text-xl font-semibold text-gray-800 text-ellipsis line-clamp-1">
                   {product.name || "Product Name"}
                 </h2>
                 <p className="text-md text-gray-600 mt-1 text-ellipsis line-clamp-1">
@@ -137,7 +139,8 @@ const Home = () => {
                   {currency} {product.price?.toFixed(2) || "0.00"}
                 </p>
                 <p className="text-xs text-gray-500 mt-1">
-                  {product.category || "Category"} | {product.company || "Company"}
+                  {product.category || "Category"} |{" "}
+                  {product.company || "Company"}
                 </p>
               </div>
             </Link>

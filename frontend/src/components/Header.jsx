@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import userContext from "../../context/userContext";
 import summaryApi from "../common";
 import toast from "react-hot-toast";
 import { FaCircleUser } from "react-icons/fa6";
 import logo from "../assets/logo.png";
+import { GrSearch } from "react-icons/gr";
 
 const Header = () => {
   const { currentUser, fetchUserDetails, setCurrentUser } =
@@ -12,6 +13,11 @@ const Header = () => {
 
   const [adminActive, setAdminActive] = useState(false);
   const navigate = useNavigate();
+  const searchInput = useLocation();
+
+  const URLSearch = new URLSearchParams(searchInput?.search);
+  const searchQuery = URLSearch.getAll("q");
+  const [search, setSearch] = useState(searchQuery);
 
   const handleLogOut = async () => {
     try {
@@ -33,6 +39,16 @@ const Header = () => {
       }
     } catch (error) {
       console.log("Logout error:", error);
+    }
+  };
+
+  const handleSearch = (e) => {
+    const { value } = e.target;
+    setSearch(value);
+    if (value) {
+      navigate(`/search?q=${value}`);
+    } else {
+      navigate(`/search`);
     }
   };
 
@@ -60,8 +76,20 @@ const Header = () => {
           )}
         </div>
 
+        <div className="hidden md:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow pl-2">
+          <input
+            type="text"
+            placeholder="search product here...."
+            className="w-full outline-none"
+            onChange={handleSearch}
+            value={search}
+          />
+          <div className="text-lg min-w-[50px] h-8 bg-violet-500 flex items-center justify-center rounded-r-full text-white">
+            <GrSearch />
+          </div>
+        </div>
+
         <div className="flex gap-5">
-    
           {currentUser.userId && currentUser.role === "admin" && (
             <>
               <Link

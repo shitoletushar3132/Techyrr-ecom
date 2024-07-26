@@ -2,7 +2,7 @@ const productModel = require("../../models/productModel");
 
 async function getProductById(req, res) {
   try {
-    const productId = req.params.productId; // Extract productId from req.params
+    const productId = req.params.productId;
 
     const product = await productModel.findById(productId);
 

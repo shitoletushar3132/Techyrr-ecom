@@ -22,19 +22,13 @@ async function adminProductsPagination(req, res) {
       });
     }
 
-    // Pagination parameters
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
 
-    console.log(page, limit);
-
-    // Calculate pagination details
     const skip = (page - 1) * limit;
 
-    // Get the total count of products
     const totalCount = await productModel.countDocuments({ userId: user._id });
 
-    // Fetch paginated products
     const products = await productModel
       .find({ userId: user._id })
       .skip(skip)

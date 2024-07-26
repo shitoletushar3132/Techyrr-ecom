@@ -7,6 +7,7 @@ import AdminPanel from "../pages/AdminPanel";
 import EditProduct from "../components/EditProduct";
 import ProductById from "../components/ProductById";
 import Home from "../pages/Home";
+import SearchProduct from "../pages/SearchProduct";
 
 const Router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const Router = createBrowserRouter([
       {
         path: "product/:productId",
         element: <ProductById />,
+      },
+      {
+        path: "search",
+        element: <SearchProduct />,
       },
     ],
   },

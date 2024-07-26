@@ -49,6 +49,11 @@ const summaryApi = {
     url: `${backendDomain}/api/products`,
     method: "get",
   },
+
+  searchProduct: {
+    url: `${backendDomain}/api/search`,
+    method: "get",
+  },
 };
 
 export default summaryApi;
