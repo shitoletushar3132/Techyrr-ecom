@@ -16,9 +16,11 @@ const AdminPanel = () => {
     parseInt(new URLSearchParams(location.search).get("page")) || 1
   );
   const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const fetchProducts = async () => {
     try {
+      setLoading(true);
       const apiData = await fetch(
         `${summaryApi.getProductPagination.url}?page=${page}&limit=9`,
         {
@@ -30,6 +32,7 @@ const AdminPanel = () => {
       const responseData = await apiData.json();
       setData(responseData.data);
       setTotalPages(responseData.pagination.totalPages);
+      setLoading(false);
     } catch (error) {
       console.log("Error fetching admin products:", error);
     }
@@ -91,9 +94,12 @@ const AdminPanel = () => {
       <div className="w-full text-center font-semibold text-xl p-4 bg-slate-200 shadow z-40 sticky top-16">
         Admin Product
       </div>
-      <div className="m-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {data.length > 0 ? (
-          data.map((product) => (
+
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="m-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {data.map((product) => (
             <Link
               to={`/product/${product._id}`}
               key={product._id}
@@ -149,11 +155,10 @@ const AdminPanel = () => {
                 </div>
               </div>
             </Link>
-          ))
-        ) : (
-          <Loading />
-        )}
-      </div>
+          ))}
+        </div>
+      )}
+
       <div className="flex justify-center gap-4 m-3">
         <button
           onClick={handlePreviousPage}
