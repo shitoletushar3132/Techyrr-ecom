@@ -5,6 +5,7 @@ import userContext from "../../context/userContext";
 import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
 import { MdDelete, MdModeEdit } from "react-icons/md";
 import toast from "react-hot-toast";
+import Loading from "../components/Loading";
 
 const AdminPanel = () => {
   const { currentUser } = useContext(userContext);
@@ -152,7 +153,7 @@ const AdminPanel = () => {
             </Link>
           ))
         ) : (
-          <p className="text-xl font-semibold">Loading Data...</p>
+          <Loading />
         )}
       </div>
       <div className="flex justify-center gap-4 m-3">

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import SummeryApi from "../common";
 import { Link } from "react-router-dom";
+import summaryApi from "../common";
 const CategoryList = () => {
   const [categoryProduct, setCategoryProduct] = useState([]);
   const [loading, setLoading] = useState(false);
   const categoryLoading = new Array(13).fill(null);
   const fetchCategroyProduct = async () => {
     setLoading(true);
-    const response = await fetch(SummeryApi.categoryProduct.url, {
-      method: SummeryApi.categoryProduct.method,
+    const response = await fetch(summaryApi.categoryList.url, {
+      method: SummeryApi.categoryList.method,
       credentials: "include",
     });
     const dataResponse = await response.json();
@@ -31,7 +32,7 @@ const CategoryList = () => {
                 ></div>
               );
             })
-          : categoryProduct.map((product, index) => {
+          : categoryProduct?.map((product, index) => {
               return (
                 <Link
                   to={"/product-category?category=" + product?.category}
@@ -40,7 +41,7 @@ const CategoryList = () => {
                 >
                   <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden p-4 bg-slate-200 flex items-center justify-center">
                     <img
-                      src={product?.productImage[0]}
+                      src={product?.imgUrl}
                       alt={product?.category}
                       className="h-full object-scale-down mix-blend-multiply hover:scale-125 transition-all"
                     />

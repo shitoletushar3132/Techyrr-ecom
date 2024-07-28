@@ -28,8 +28,6 @@ function App() {
           userName: data.data.username,
           role: data.data.role,
         });
-      } else {
-        toast.error("Failed to fetch user details");
       }
       console.log("Current user:", data);
     } catch (error) {

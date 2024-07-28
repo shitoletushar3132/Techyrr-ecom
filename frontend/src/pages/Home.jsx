@@ -3,6 +3,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
 import currencyConvertor from "../helpers/currencyConvertor";
 import summaryApi from "../common";
+import Loading from "../components/Loading";
+import CategoryList from "../components/CategoryList";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -17,8 +19,11 @@ const Home = () => {
   );
   const [rate, setRate] = useState(1); // Default rate to 1
 
+  const [loading, setLoading] = useState(false);
+
   const fetchProducts = async () => {
     try {
+      setLoading(true);
       const apiData = await fetch(
         `${summaryApi.getProducts.url}?page=${page}&limit=9`,
         { method: "GET" }
@@ -32,6 +37,7 @@ const Home = () => {
         price: product.price * rate,
       }));
       setData(updatedProducts);
+      setLoading(false);
     } catch (error) {
       console.log("Error fetching products:", error);
     }
@@ -103,9 +109,16 @@ const Home = () => {
           ))}
         </select>
       </div>
-      <div className="m-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {data.length > 0 ? (
-          data.map((product) => (
+
+      <div>
+        <CategoryList />
+      </div>
+
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="m-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {data.map((product) => (
             <Link
               to={`/product/${product._id}`}
               key={product._id}
@@ -144,48 +157,51 @@ const Home = () => {
                 </p>
               </div>
             </Link>
-          ))
-        ) : (
-          <p className="text-xl font-semibold">Loading Data...</p>
-        )}
-      </div>
-      <div className="flex justify-center gap-4 m-3">
-        <button
-          onClick={handlePreviousPage}
-          className="text-2xl hover:scale-110"
-          disabled={page === 1}
-        >
-          <FaCircleArrowLeft />
-        </button>
-
-        {/* Pagination Numbers */}
-        <div className="flex gap-2">
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-            (number) => (
-              <button
-                key={number}
-                onClick={() => {
-                  setPage(number);
-                  navigate(`/?page=${number}`);
-                }}
-                className={`px-2 py-1 rounded ${
-                  number === page ? "bg-blue-500 text-white" : "bg-gray-200"
-                } hover:bg-blue-300`}
-              >
-                {number}
-              </button>
-            )
-          )}
+          ))}
         </div>
+      )}
 
-        <button
-          onClick={handleNextPage}
-          className="text-2xl hover:scale-110"
-          disabled={page === totalPages}
-        >
-          <FaCircleArrowRight />
-        </button>
-      </div>
+      {loading ? (
+        <p className="text-center"></p>
+      ) : (
+        <div className="flex justify-center gap-4 m-3 mt-28 ">
+          <button
+            onClick={handlePreviousPage}
+            className="text-2xl hover:scale-110"
+            disabled={page === 1}
+          >
+            <FaCircleArrowLeft />
+          </button>
+
+          {/* Pagination Numbers */}
+          <div className="flex gap-2">
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+              (number) => (
+                <button
+                  key={number}
+                  onClick={() => {
+                    setPage(number);
+                    navigate(`/?page=${number}`);
+                  }}
+                  className={`px-2 py-1 rounded ${
+                    number === page ? "bg-blue-500 text-white" : "bg-gray-200"
+                  } hover:bg-blue-300`}
+                >
+                  {number}
+                </button>
+              )
+            )}
+          </div>
+
+          <button
+            onClick={handleNextPage}
+            className="text-2xl hover:scale-110"
+            disabled={page === totalPages}
+          >
+            <FaCircleArrowRight />
+          </button>
+        </div>
+      )}
     </div>
   );
 };

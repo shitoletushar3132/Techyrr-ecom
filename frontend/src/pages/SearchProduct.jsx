@@ -32,14 +32,14 @@ const SearchProduct = () => {
       {loading && <p className="text-lg text-center">Loading....</p>}
 
       <p className="text-lg font-semibold my-3">
-        search Result : {data.length}
+        search Result : {data?.length}
       </p>
 
-      {data.length === 0 && !loading && (
+      {data?.length === 0 && !loading && (
         <p className="bg-white text-lg text-center p-4">No Data Found...</p>
       )}
 
-      {data.length !== 0 && !loading && (
+      {data?.length !== 0 && !loading && (
         <VerticalCard loading={loading} data={data} />
       )}
     </div>

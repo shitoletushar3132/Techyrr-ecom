@@ -13,6 +13,8 @@ const logOut = require("../controller/user/logout");
 const adminProducts = require("../controller/product/adminProducts");
 const adminProductsPagination = require("../controller/product/adminProductPaginatio");
 const serachProduct = require("../controller/product/searchProduct");
+const getCategoryProduct = require("../controller/product/categoryList");
+const allProduct = require("../controller/product/allCategroyProduct");
 const router = express.Router();
 
 router.post("/", test);
@@ -32,4 +34,6 @@ router.post("/delete-product", authToken, deleteProduct);
 router.get("/admin-product", authToken, adminProducts);
 router.get("/admin-pagination", authToken, adminProductsPagination);
 router.get("/search", serachProduct);
+router.get("/category-list", getCategoryProduct);
+router.get("/category-product", allProduct);
 module.exports = router;

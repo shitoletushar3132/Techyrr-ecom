@@ -8,6 +8,8 @@ import EditProduct from "../components/EditProduct";
 import ProductById from "../components/ProductById";
 import Home from "../pages/Home";
 import SearchProduct from "../pages/SearchProduct";
+import Loading from "../components/Loading";
+import CategoryProduct from "../pages/CategoryProduct";
 
 const Router = createBrowserRouter([
   {
@@ -15,7 +17,7 @@ const Router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "",
+        path: "/",
         element: <Home />,
       },
       {
@@ -45,6 +47,14 @@ const Router = createBrowserRouter([
       {
         path: "search",
         element: <SearchProduct />,
+      },
+      {
+        path: "/loading",
+        element: <Loading />,
+      },
+      {
+        path: "/product-category",
+        element: <CategoryProduct />,
       },
     ],
   },
