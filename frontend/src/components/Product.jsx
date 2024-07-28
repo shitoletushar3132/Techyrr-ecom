@@ -1,26 +1,8 @@
 import React from "react";
 import { MdDelete } from "react-icons/md";
 import { MdModeEdit } from "react-icons/md";
-import summaryApi from "../common";
 
 const Product = ({ imgUrl, name, description, price, category, company }) => {
-  const get = (e) => {
-    console.log(e);
-  };
-  const detele = async (e) => {
-    try {
-      const apiData = await fetch(summaryApi.deleteProduct.url, {
-        method: "post",
-        headers: {
-          "content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(data),
-      });
-    } catch (error) {
-      console.log("delete error");
-    }
-  };
 
   return (
     <div className="flex items-center bg-white shadow-md rounded-lg overflow-hidden my-4 p-4">

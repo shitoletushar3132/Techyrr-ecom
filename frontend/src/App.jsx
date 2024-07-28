@@ -31,8 +31,7 @@ function App() {
       }
       console.log("Current user:", data);
     } catch (error) {
-      console.error("Error fetching user details:", error);
-      toast.error("Error fetching user details");
+      console.error("Error fetching user details:");
     }
   };
 

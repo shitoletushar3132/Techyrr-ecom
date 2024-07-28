@@ -52,8 +52,6 @@ const AdminPanel = () => {
       if (response.success) {
         toast.success(response.message);
         fetchProducts();
-      } else {
-        toast.error(response.message);
       }
     } catch (error) {
       toast.error("An error occurred while deleting the product.");

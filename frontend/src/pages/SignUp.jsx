@@ -37,8 +37,6 @@ const SignUp = () => {
         toast.success(dataApi.message);
         fetchUserDetails();
         navigate("/");
-      } else if (dataApi.error) {
-        toast.error(dataApi.message);
       }
     } catch (error) {
       console.error("Login error:", error);

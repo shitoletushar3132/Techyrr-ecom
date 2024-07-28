@@ -3,7 +3,6 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 const VerticalCard = ({ data }) => {
-  console.log("data varical", data);
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,320px))] justify-center md:justify-between md:gap-4 overflow-x-scroll scrollbar-none transition-all">
       {data?.map((product, index) => (
@@ -28,7 +27,7 @@ const VerticalCard = ({ data }) => {
             <p className="capitalize text-slate-500">{product?.category}</p>
             <div className="flex gap-2 md:gap-3">
               <p className="text-black">
-                Price :  {localStorage.getItem("toCountry")}{" "}
+                Price : {localStorage.getItem("toCountry")}{" "}
                 {(product?.price * localStorage.getItem("rate")).toFixed(3)}
               </p>
             </div>

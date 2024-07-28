@@ -39,8 +39,6 @@ const Register = () => {
       if (dataApi.success) {
         toast.success(dataApi.message);
         navigate("/login");
-      } else if (dataApi.error) {
-        toast.error(dataApi.message);
       }
     } catch (error) {
       console.error("Registration error:", error);
